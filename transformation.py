@@ -15,8 +15,8 @@ class transforming:
             audio = speech.RecognitionAudio(content=content)
             config = speech.RecognitionConfig(
                 encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
-                language_code="en-US",  # Omitting sample_rate_hertz here
-                enable_word_time_offsets=True,  # Enable word timestamps
+                language_code="en-IN",  
+                enable_word_time_offsets=True, 
                 enable_automatic_punctuation=True
             )
 
@@ -40,7 +40,7 @@ class transforming:
 
 
     def generate_timed_speech(enhanced_segments):
-        """Generate speech with specific timing for each segment."""
+        
         try:
             segment_audios = []
             seg_record=[]
@@ -51,8 +51,8 @@ class transforming:
                     continue
                 input_text = texttospeech.SynthesisInput(text=segment['text'])
                 voice = texttospeech.VoiceSelectionParams(
-                    language_code="en-US",
-                    name="en-US-Journey-D"
+                    language_code="en-IN",
+                    name="en-IN-Journey-D"
                 )
                 
                 # Calculate desired duration for this segment
@@ -70,7 +70,7 @@ class transforming:
                     audio_config=audio_config
                 )
                 
-                # Save temporary file to check duration
+        
                 temp_check = tempfile.NamedTemporaryFile(delete=False, suffix='.wav')
                 with open(temp_check.name, "wb") as out:
                     out.write(response.audio_content)
@@ -79,12 +79,8 @@ class transforming:
                 temp_audio = AudioSegment.from_file(temp_check.name)
                 base_duration = len(temp_audio)/1000
                 
-                print(base_duration)
-                
-                # Calculate required speaking rate
                 speaking_rate = base_duration / desired_duration
                 
-                # Clamp speaking rate to reasonable bounds (0.25x to 4x)
                 speaking_rate = max(0.25, min(4.0, speaking_rate))
                 
                 temp_segment = tempfile.NamedTemporaryFile(delete=False, suffix='.wav')
@@ -97,22 +93,9 @@ class transforming:
                 
                 
                 os.unlink(temp_check.name)
-                audio123 = AudioSegment.from_file(temp_segment.name)
-                current_duration123 = len(audio123)/1000
-                
                 
                 segment_audios.append({
                     'path': temp_segment.name,
-                    'timing': segment['timing'],
-                    "text": segment['text'],
-                    'base': base_duration,
-                    "des":current_duration123,
-                    # 'speaking_rate': speaking_rate
-                })
-                seg_record.append({
-                    "text": segment['text'],
-                    'base': base_duration,
-                    "des":current_duration123,
                     'timing': segment['timing'],
                 })
             

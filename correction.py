@@ -3,7 +3,6 @@ import requests
 
 class correcting:
     def correct_transcription(word_timings):
-        print("Azure OpenAI GPT-4o Connectivity Test")
 
         segments = []
         current_segment = []
@@ -16,7 +15,7 @@ class correcting:
             else:
                     # Check if there's a significant pause
                 time_gap = word_info['start_time'] - word_timings[i-1]['end_time']
-                if time_gap > 0.4:  # 400ms threshold for natural pauses
+                if time_gap > 0.35:  # 350ms threshold for natural pauses
                     current_timing['end'] = word_timings[i-1]['end_time']
                     segments.append({
                         'text': ' '.join(current_segment),
@@ -32,22 +31,21 @@ class correcting:
                 'text': ' '.join(current_segment),
                 'timing': current_timing.copy()
             })
-        print(segments)
 
-        # Azure OpenAI connection details
-        azure_openai_key = "22ec84421ec24230a3638d1b51e3a7dc"  # Replace with your actual key
-        azure_openai_endpoint = "https://internshala.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-08-01-preview"  # Replace with your actual endpoint URL
+        
+        azure_openai_key = "22ec84421ec24230a3638d1b51e3a7dc" 
+        azure_openai_endpoint = "https://internshala.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-08-01-preview"  
         
         # Check if both the key and endpoint are provided
         if azure_openai_key and azure_openai_endpoint:
             try:
-                # Setting up headers for the API request
+                
                 headers = {
                     "Content-Type": "application/json",
                     "api-key": azure_openai_key
                 }
                 enhanced_segments=[]
-                # Data to be sent to Azure OpenAI
+                
                 for segment in segments:
                     data = {
                         "messages":[
