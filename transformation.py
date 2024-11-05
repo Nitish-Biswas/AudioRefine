@@ -15,9 +15,8 @@ class transforming:
             audio = speech.RecognitionAudio(content=content)
             config = speech.RecognitionConfig(
                 encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
-                language_code="en-IN",  
+                language_code="en-US",  
                 enable_word_time_offsets=True, 
-                enable_automatic_punctuation=True
             )
 
             response = client.recognize(config=config, audio=audio)
@@ -47,7 +46,7 @@ class transforming:
             client = texttospeech.TextToSpeechClient()
             
             for segment in enhanced_segments:
-                if not segment['text']:
+                if not segment['text'] or segment['text'] == "em404$":
                     continue
                 input_text = texttospeech.SynthesisInput(text=segment['text'])
                 voice = texttospeech.VoiceSelectionParams(

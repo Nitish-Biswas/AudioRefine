@@ -1,4 +1,4 @@
-from correction import correcting
+from correction_gemini import correcting
 from create_video import creating_video
 from extract_aduio import extracting_audio
 from transformation import transforming
@@ -33,16 +33,15 @@ def main():
                 if not condition:
                     st.error(f"Error in transcripting audio: {str(word_timings)}")
                     return
-                
+                print(word_timings)
 
 
                 condition, enhanced_text = correcting.correct_transcription(word_timings)
                 if not condition:
                     st.error(f"Error in correcting text: {str(enhanced_text)}")
                     return
-                enhanced_text = [{'text': 'Hi, I am Nitish Biswas, a computer science student at J Institute, graduating in 2026.', 'timing': {'start': 0.7, 'end': 7.4}}, {'text': 'I have worked on projects using Python, Django, and React, building everything from interactive dashboards to real-time systems.', 'timing': {'start': 11.8, 'end': 19.3}}, {'text': "I love exploring AI and machine learning, and I'm always looking for cool new challenges to tackle.", 'timing': {'start': 25.4, 'end': 30.9}}, {'text': 'Excited to keep learning and creating.', 'timing': {'start': 34.3, 'end': 36.3}}]
                 
-
+                print(enhanced_text)
                 
                 condition,segment_audios = transforming.generate_timed_speech(enhanced_text)
                 if not condition:

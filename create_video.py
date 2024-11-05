@@ -20,6 +20,7 @@ class creating_video:
             combined_audio = silent_audio
             
             for segment in segment_audios:
+                print("alf")
                 segment_audio = AudioSegment.from_wav(segment['path'])
                 position = (segment['timing']['start']) * 1000 
                 combined_audio = combined_audio.overlay(segment_audio, position=int(position))
