@@ -45,8 +45,8 @@ This project is a **Streamlit-based AI-Driven Video Audio Refinement Tool.** The
  1. **Clone the repository:**
 
     ```sh
-    git clone https://github.com/Nitish-Biswas/Transcription.git
-    cd Dish-Management
+    git clone https://github.com/Nitish-Biswas/AudioRefine.git
+    cd AudioRefine
     ```
 2. **Create a virtual environment and activate it:**
 
